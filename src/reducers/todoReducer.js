@@ -1,7 +1,8 @@
-import { ADD_TODO, TOGGLE_TODO, DELETE_TODO } from '../actions/todoActions';
+import { ADD_TODO, TOGGLE_TODO, DELETE_TODO, SET_FILTER, SHOW_ALL } from '../actions/todoActions';
 
 const initialState = {
-  todos: []
+  todos: [],
+  visibilityFilter: SHOW_ALL
 };
 
 const todoReducer = (state = initialState, action) => {
@@ -31,6 +32,11 @@ const todoReducer = (state = initialState, action) => {
       return {
         ...state,
         todos: state.todos.filter(todo => todo.id !== action.id)
+      };
+    case SET_FILTER:
+      return {
+        ...state,
+        visibilityFilter: action.filter
       };
     default:
       return state;
