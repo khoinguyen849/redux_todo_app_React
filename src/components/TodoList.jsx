@@ -1,18 +1,17 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { connect } from "react-redux";
+//import { useSelector, useDispatch } from "react-redux";
 import { toggleTodo, deleteTodo } from "../actions/todoActions";
 import { getVisibleTodos } from "../selectors/todoSelectors";
 import "./TodoList.css";
 
-const TodoList = () => {
-    const todos = useSelector((state) => state.todos);
-    const filter = useSelector((state) => state.visibilityFilter);
-    const visibleTodos = getVisibleTodos(todos, filter);
-    const dispatch = useDispatch();
+const TodoList = ({todos, toggleTodo, deleteTodo}) => {
+    
+  
 
-    return (
+   
         <ul className="todo-list">
-            {visibleTodos.map((todo) => (
+            {todos.map((todo) => (
                 <li key={todo.id} className="todo-item">
                     <span
                         onClick={() => dispatch(toggleTodo(todo.id))}
@@ -31,7 +30,17 @@ const TodoList = () => {
                 </li>
             ))}
         </ul>
-    );
+   
+
+   //Map Redux state
+   const mapStateToProps = (state) => ({
+    todos: getVisibleTodos(state.todos, state.visibilityFilter),
+   })
+
+   
 };
 
-export default TodoList;
+//Map dispatch action to props
+   const mapDispatchToProps = {toggleTodo, deleteTodo}
+
+   export default connect(mapStateToProps,mapDispatchToProps)(TodoList)
