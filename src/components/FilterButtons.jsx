@@ -1,16 +1,28 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setFilter, SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../actions/todoActions';
-import './FilterButtons.css';
+import React from "react";
+import { connect } from "react-redux";
+import {
+  setFilter,
+  SHOW_ALL,
+  SHOW_COMPLETED,
+  SHOW_ACTIVE,
+} from "../actions/todoActions";
+import "./FilterButtons.css";
 
-const FilterButtons = () => {
-  const currentFilter = useSelector(state => state.visibilityFilter);
-  const dispatch = useDispatch();
+const mapStateToProps = (state) => ({
+  currentFilter: state.visibilityFilter,
+});
+const mapDispatchToProps = {
+  setFilter,
+};
+const FilterButtons = ({ currentFilter,setFilter }) => {
+  /*
+const currentFilter = useSelector(state => state.visibilityFilter);
+*/
 
   const filterButtons = [
-    { filter: SHOW_ALL, label: 'All' },
-    { filter: SHOW_ACTIVE, label: 'Active' },
-    { filter: SHOW_COMPLETED, label: 'Completed' }
+    { filter: SHOW_ALL, label: "All" },
+    { filter: SHOW_ACTIVE, label: "Active" },
+    { filter: SHOW_COMPLETED, label: "Completed" },
   ];
 
   return (
@@ -20,9 +32,9 @@ const FilterButtons = () => {
         {filterButtons.map(({ filter, label }) => (
           <button
             key={filter}
-            onClick={() => dispatch(setFilter(filter))}
+            onClick={() => setFilter(filter)}
             className={`filter-button ${
-              currentFilter === filter ? 'active' : ''
+              currentFilter === filter ? "active" : ""
             }`}
           >
             {label}
@@ -33,4 +45,4 @@ const FilterButtons = () => {
   );
 };
 
-export default FilterButtons;
+export default connect(mapStateToProps,mapDispatchToProps)(FilterButtons);

@@ -9,10 +9,9 @@ const persistedState = loadState();
 const store = createStore(todoReducer, persistedState);
 
 // Subscribe to store changes and save to localStorage
-// Throttle saves to avoid excessive localStorage writes
 const throttledSaveState = throttle(() => {
   saveState(store.getState());
-}, 1000); // Save at most once per second
+}, 1000); 
 
 store.subscribe(throttledSaveState);
 

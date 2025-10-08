@@ -1,16 +1,17 @@
+
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { addTodo } from "../actions/todoActions";
 import "./AddTodo.css";
 
-const AddTodo = () => {
+
+const AddTodo = ({ addTodo }) => {
     const [inputValue, setInputValue] = useState("");
-    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (inputValue.trim()) {
-            dispatch(addTodo(inputValue.trim()));
+            addTodo(inputValue.trim());
             setInputValue("");
         }
     };
@@ -31,4 +32,6 @@ const AddTodo = () => {
     );
 };
 
-export default AddTodo;
+
+
+export default connect(null, {addTodo})(AddTodo);
